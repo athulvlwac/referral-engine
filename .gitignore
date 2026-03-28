@@ -1,0 +1,81 @@
+# -----------------------------
+# OS / Editor
+# -----------------------------
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Local AI/editor state
+.claude/
+
+# -----------------------------
+# Logs
+# -----------------------------
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# -----------------------------
+# Environment files (keep .env.example tracked)
+# -----------------------------
+.env
+.env.*
+!.env.example
+!.env.*.example
+
+# -----------------------------
+# Node / React (incl. Vite)
+# -----------------------------
+**/node_modules/
+**/dist/
+**/build/
+**/.vite/
+**/.parcel-cache/
+**/.next/
+**/out/
+**/.turbo/
+**/.eslintcache
+**/coverage/
+
+# -----------------------------
+# Python / FastAPI
+# -----------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# Caches / tooling
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.nox/
+.hypothesis/
+
+# Test / coverage
+.coverage
+coverage.xml
+htmlcov/
+
+# Packaging
+*.egg-info/
+pip-wheel-metadata/
+
+# Databases (local/dev)
+*.db
+*.sqlite
+*.sqlite3

@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Obsidian Pulse | Referral &amp; Fraud Command Center</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-secondary-container": "#c4abff",
+                        "on-surface": "#e2e2e8",
+                        "tertiary-container": "#b71bcf",
+                        "secondary-fixed-dim": "#d0bcff",
+                        "surface-container": "#1e2024",
+                        "on-surface-variant": "#c4c5d9",
+                        "surface-container-highest": "#333539",
+                        "tertiary-fixed-dim": "#fbabff",
+                        "secondary": "#d0bcff",
+                        "on-primary-container": "#efefff",
+                        "error-container": "#93000a",
+                        "surface-container-lowest": "#0c0e12",
+                        "surface": "#111317",
+                        "on-error-container": "#ffdad6",
+                        "error": "#ffb4ab",
+                        "surface-container-high": "#282a2e",
+                        "on-secondary": "#3c0091",
+                        "on-tertiary-fixed": "#36003e",
+                        "primary-fixed": "#dde1ff",
+                        "on-secondary-fixed": "#23005c",
+                        "primary-container": "#2e5bff",
+                        "surface-variant": "#333539",
+                        "on-primary-fixed-variant": "#0035be",
+                        "on-background": "#e2e2e8",
+                        "on-primary": "#002388",
+                        "surface-tint": "#b8c3ff",
+                        "surface-dim": "#111317",
+                        "on-tertiary-container": "#ffebfb",
+                        "on-error": "#690005",
+                        "secondary-fixed": "#e9ddff",
+                        "on-tertiary-fixed-variant": "#7c008e",
+                        "outline-variant": "#434656",
+                        "inverse-surface": "#e2e2e8",
+                        "primary": "#b8c3ff",
+                        "on-secondary-fixed-variant": "#5516be",
+                        "surface-bright": "#37393e",
+                        "inverse-primary": "#124af0",
+                        "primary-fixed-dim": "#b8c3ff",
+                        "on-tertiary": "#580065",
+                        "tertiary": "#fbabff",
+                        "tertiary-fixed": "#ffd6fd",
+                        "outline": "#8e90a2",
+                        "on-primary-fixed": "#001356",
+                        "background": "#111317",
+                        "surface-container-low": "#1a1c20",
+                        "inverse-on-surface": "#2f3035",
+                        "secondary-container": "#571bc1"
+                    },
+                    fontFamily: {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Space Grotesk"]
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .glass-card {
+            background: rgba(30, 32, 36, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(226, 226, 232, 0.05);
+        }
+        .glow-primary:hover {
+            box-shadow: 0 0 30px rgba(46, 91, 255, 0.15);
+        }
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #282a2e;
+            border-radius: 10px;
+        }
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+        .animate-pulse-dot {
+            animation: pulse-dot 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-primary/30 min-h-screen">
+<!-- TopNavBar (Shared Component) -->
+<header class="fixed top-0 w-full flex justify-between items-center px-8 h-16 bg-surface/80 backdrop-blur-xl dark:bg-[#111317]/80 z-50 tonal-shift-bg-surface-container-low shadow-2xl shadow-black/40">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3">
+<span class="text-xl font-black tracking-tighter text-[#e2e2e8] font-manrope">Obsidian Pulse</span>
+<div class="flex items-center gap-1.5 px-2 py-0.5 bg-error/10 rounded-full border border-error/20">
+<span class="w-1.5 h-1.5 rounded-full bg-error animate-pulse-dot"></span>
+<span class="text-[9px] font-label font-bold text-error uppercase tracking-widest">Live</span>
+</div>
+</div>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-[#e2e2e8]/60 hover:text-[#e2e2e8] transition-colors text-sm font-medium font-inter" href="#">Network</a>
+<a class="text-[#e2e2e8]/60 hover:text-[#e2e2e8] transition-colors text-sm font-medium font-inter" href="#">Analytics</a>
+<a class="text-[#e2e2e8]/60 hover:text-[#e2e2e8] transition-colors text-sm font-medium font-inter" href="#">Security</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<span class="text-[10px] font-label text-on-surface-variant/50 uppercase tracking-widest hidden lg:block">Last updated: 2s ago</span>
+<button class="p-2 rounded-full hover:bg-[#2E5BFF]/10 hover:text-[#2E5BFF] transition-all duration-300 scale-95 active:scale-90">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 rounded-full hover:bg-[#2E5BFF]/10 hover:text-[#2E5BFF] transition-all duration-300 scale-95 active:scale-90">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="settings">settings</span>
+</button>
+<div class="h-8 w-8 rounded-full overflow-hidden border border-outline-variant/30">
+<img alt="Administrator Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJBoS5N7HAuqcMoFYu30VxZLT7PkYA7Sjoy6pH2G2l9E-haX_ETA68R2NBJuoKfF-q1ikqs11w_w1ftbnIpME7wY7TAgvUXZvlgF5buubCAtnVvLuxAZW3ZFDYrxtlR5wFgvFiF98bi53ineYh5VJ-1naJz-yqmdlmKROoxrM6oSRZFNZCFudAIYR2t7Qr5bnTrcBFsWxy7sMb6Xb0xY57MxxYG7SI5AUxPeHEU8hrSZcLfhwU44nqOQrcnBYuUz8W3pzsDYAaEg"/>
+</div>
+</div>
+</header>
+<!-- SideNavBar (Shared Component) -->
+<aside class="fixed left-0 top-0 h-full w-64 z-40 bg-[#111317] dark:bg-[#111317] flex flex-col pt-20 pb-8">
+<div class="px-6 mb-8">
+<h2 class="font-manrope font-semibold text-on-surface">Command Center</h2>
+<p class="font-label uppercase tracking-widest text-[10px] text-primary">Sentinel Active</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-4 bg-gradient-to-r from-[#2e5bff]/20 to-transparent text-[#2e5bff] border-l-4 border-[#2e5bff] px-6 py-4 translate-x-1 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label uppercase tracking-widest text-[10px]">Dashboard</span>
+</a>
+<a class="flex items-center gap-4 text-[#e2e2e8]/40 px-6 py-4 hover:text-[#e2e2e8] hover:bg-white/5 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="hub">hub</span>
+<span class="font-label uppercase tracking-widest text-[10px]">Referrals</span>
+</a>
+<a class="flex items-center gap-4 text-[#e2e2e8]/40 px-6 py-4 hover:text-[#e2e2e8] hover:bg-white/5 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="shield_alert">shield</span>
+<span class="font-label uppercase tracking-widest text-[10px]">Fraud Watch</span>
+</a>
+<a class="flex items-center gap-4 text-[#e2e2e8]/40 px-6 py-4 hover:text-[#e2e2e8] hover:bg-white/5 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+<span class="font-label uppercase tracking-widest text-[10px]">Rewards</span>
+</a>
+<a class="flex items-center gap-4 text-[#e2e2e8]/40 px-6 py-4 hover:text-[#e2e2e8] hover:bg-white/5 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+<span class="font-label uppercase tracking-widest text-[10px]">Logs</span>
+</a>
+</nav>
+<div class="px-6 pt-6 mt-auto border-t border-outline-variant/10">
+<button class="w-full py-3 px-4 rounded-lg bg-surface-container-high hover:bg-surface-bright text-xs font-label uppercase tracking-widest transition-colors mb-4">
+            Export Intelligence
+        </button>
+<div class="space-y-1">
+<a class="flex items-center gap-4 text-[#e2e2e8]/40 px-2 py-2 hover:text-[#e2e2e8] transition-colors" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="help_outline">help_outline</span>
+<span class="text-[10px] font-label uppercase tracking-widest">Support</span>
+</a>
+<a class="flex items-center gap-4 text-[#e2e2e8]/40 px-2 py-2 hover:text-[#e2e2e8] transition-colors" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="logout">logout</span>
+<span class="text-[10px] font-label uppercase tracking-widest">Logout</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Canvas -->
+<main class="pl-64 pt-20 p-8 min-h-screen">
+<div class="max-w-[1600px] mx-auto space-y-8">
+<!-- 1. Top Section (Metrics Panel) -->
+<section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-7 gap-4">
+<!-- Total Users -->
+<div class="glass-card p-5 rounded-xl glow-primary transition-all duration-500 hover:scale-[1.02]">
+<div class="flex items-start justify-between mb-3">
+<div class="p-2 rounded-lg bg-primary/10 text-primary">
+<span class="material-symbols-outlined text-xl" data-icon="group">group</span>
+</div>
+<span class="text-[10px] font-label text-primary uppercase tracking-widest">+12%</span>
+</div>
+<p class="text-on-surface-variant text-[10px] font-label uppercase tracking-widest mb-1">Total Users</p>
+<h3 class="text-2xl font-headline font-bold text-on-surface">12,450</h3>
+</div>
+<!-- Total Referrals -->
+<div class="glass-card p-5 rounded-xl glow-primary transition-all duration-500 hover:scale-[1.02]">
+<div class="flex items-start justify-between mb-3">
+<div class="p-2 rounded-lg bg-secondary/10 text-secondary">
+<span class="material-symbols-outlined text-xl" data-icon="share">share</span>
+</div>
+<span class="text-[10px] font-label text-secondary uppercase tracking-widest">+5.4%</span>
+</div>
+<p class="text-on-surface-variant text-[10px] font-label uppercase tracking-widest mb-1">Total Referrals</p>
+<h3 class="text-2xl font-headline font-bold text-on-surface">8,210</h3>
+</div>
+<!-- Cycles Prevented -->
+<div class="glass-card p-5 rounded-xl glow-primary transition-all duration-500 border-l-2 border-l-error/30 hover:scale-[1.02]">
+<div class="flex items-start justify-between mb-3">
+<div class="p-2 rounded-lg bg-error/10 text-error">
+<span class="material-symbols-outlined text-xl" data-icon="cycle">cycle</span>
+</div>
+<span class="text-[10px] font-label text-error uppercase tracking-widest">Crit</span>
+</div>
+<p class="text-on-surface-variant text-[10px] font-label uppercase tracking-widest mb-1">Cycles Prevented</p>
+<h3 class="text-2xl font-headline font-bold text-on-surface">1,042</h3>
+</div>
+<!-- Avg Referral Depth -->
+<div class="glass-card p-5 rounded-xl glow-primary transition-all duration-500 hover:scale-[1.02]">
+<div class="flex items-start justify-between mb-3">
+<div class="p-2 rounded-lg bg-tertiary/10 text-tertiary">
+<span class="material-symbols-outlined text-xl" data-icon="account_tree">account_tree</span>
+</div>
+<span class="text-[10px] font-label text-tertiary uppercase tracking-widest">L3.2</span>
+</div>
+<p class="text-on-surface-variant text-[10px] font-label uppercase tracking-widest mb-1">Avg Depth</p>
+<h3 class="text-2xl font-headline font-bold text-on-surface">4.8</h3>
+</div>
+<!-- Valid vs Rejected -->
+<div class="glass-card p-5 rounded-xl glow-primary transition-all duration-500 hover:scale-[1.02]">
+<div class="flex items-start justify-between mb-3">
+<div class="p-2 rounded-lg bg-surface-variant text-outline">
+<span class="material-symbols-outlined text-xl" data-icon="rule">rule</span>
+</div>
+<div class="flex gap-1 h-1 w-10 rounded-full overflow-hidden mt-3">
+<div class="bg-secondary w-3/4"></div>
+<div class="bg-error w-1/4"></div>
+</div>
+</div>
+<p class="text-on-surface-variant text-[10px] font-label uppercase tracking-widest mb-1">V/R Ratio</p>
+<h3 class="text-2xl font-headline font-bold text-on-surface">7.5k <span class="text-[10px] font-normal text-on-surface-variant">/ 710</span></h3>
+</div>
+<!-- Fraud Attempts -->
+<div class="glass-card p-5 rounded-xl glow-primary transition-all duration-500 hover:scale-[1.02]">
+<div class="flex items-start justify-between mb-3">
+<div class="p-2 rounded-lg bg-tertiary/10 text-tertiary">
+<span class="material-symbols-outlined text-xl" data-icon="gpp_maybe">gpp_maybe</span>
+</div>
+<div class="animate-pulse flex items-center gap-1">
+<div class="w-1.5 h-1.5 rounded-full bg-tertiary"></div>
+</div>
+</div>
+<p class="text-on-surface-variant text-[10px] font-label uppercase tracking-widest mb-1">Fraud Watch</p>
+<h3 class="text-2xl font-headline font-bold text-on-surface">142</h3>
+</div>
+<!-- Rewards Distributed -->
+<div class="glass-card p-5 rounded-xl glow-primary transition-all duration-500 hover:scale-[1.02]">
+<div class="flex items-start justify-between mb-3">
+<div class="p-2 rounded-lg bg-gradient-to-br from-primary-container to-secondary-container text-white">
+<span class="material-symbols-outlined text-xl" data-icon="payments">payments</span>
+</div>
+</div>
+<p class="text-on-surface-variant text-[10px] font-label uppercase tracking-widest mb-1">Rewards</p>
+<h3 class="text-lg font-headline font-bold text-on-surface">₹45.0L</h3>
+</div>
+</section>
+<!-- 2. Center Section (Referral Network Graph) -->
+<section class="glass-card rounded-xl overflow-hidden relative min-h-[500px] flex flex-col">
+<div class="p-8 pb-0 flex flex-wrap justify-between items-center z-10 gap-4">
+<div>
+<h2 class="text-xl font-headline font-bold text-on-surface">Intelligence Network</h2>
+<p class="text-on-surface-variant text-sm font-body">Real-time referral relationship mapping</p>
+</div>
+<div class="flex items-center gap-4">
+<!-- Tree/Network Toggle -->
+<div class="flex p-1 bg-surface-container-high rounded-lg border border-outline-variant/20">
+<button class="px-3 py-1.5 rounded text-[10px] font-label uppercase tracking-widest bg-primary-container text-on-primary-container transition-all">Network</button>
+<button class="px-3 py-1.5 rounded text-[10px] font-label uppercase tracking-widest text-on-surface-variant hover:text-on-surface transition-all">Tree View</button>
+</div>
+<div class="flex gap-2">
+<button class="px-4 py-2 rounded-lg bg-surface-container-high text-xs font-label uppercase tracking-widest border border-outline-variant/20 hover:bg-surface-bright transition-colors">Expand Map</button>
+<button class="px-4 py-2 rounded-lg bg-primary-container text-on-primary-container text-xs font-label uppercase tracking-widest hover:brightness-110 transition-all">Identify Clusters</button>
+</div>
+</div>
+</div>
+<!-- Network Visualization Container -->
+<div class="flex-1 relative flex items-center justify-center p-8 overflow-hidden group">
+<!-- Depth Level Indicators -->
+<div class="absolute left-8 top-1/2 -translate-y-1/2 flex flex-col gap-12 pointer-events-none">
+<div class="flex flex-col">
+<span class="text-[10px] font-label text-primary/40 uppercase">Level 1</span>
+<div class="w-px h-12 bg-gradient-to-b from-primary/40 to-transparent"></div>
+</div>
+<div class="flex flex-col">
+<span class="text-[10px] font-label text-primary/40 uppercase">Level 2</span>
+<div class="w-px h-12 bg-gradient-to-b from-primary/40 to-transparent"></div>
+</div>
+<div class="flex flex-col">
+<span class="text-[10px] font-label text-primary/40 uppercase">Level 3</span>
+<div class="w-px h-12 bg-gradient-to-b from-primary/40 to-transparent"></div>
+</div>
+</div>
+<!-- Decorative Background Gradients -->
+<div class="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent"></div>
+<div class="relative w-full max-w-4xl aspect-[21/9]">
+<!-- SVG for Lines with Arrows -->
+<svg class="absolute inset-0 w-full h-full" viewbox="0 0 800 400">
+<defs>
+<marker id="arrowhead-primary" markerheight="6" markerwidth="6" orient="auto" refx="10" refy="3">
+<polygon fill="#2e5bff" points="0 0, 6 3, 0 6"></polygon>
+</marker>
+<marker id="arrowhead-tertiary" markerheight="6" markerwidth="6" orient="auto" refx="10" refy="3">
+<polygon fill="#b71bcf" points="0 0, 6 3, 0 6"></polygon>
+</marker>
+<lineargradient id="lineGradient" x1="0%" x2="100%" y1="0%" y2="100%">
+<stop offset="0%" style="stop-color:#2e5bff;stop-opacity:0.6"></stop>
+<stop offset="100%" style="stop-color:#b71bcf;stop-opacity:0.6"></stop>
+</lineargradient>
+</defs>
+<!-- Connection Lines -->
+<path d="M400,200 L150,100" fill="none" marker-end="url(#arrowhead-primary)" stroke="url(#lineGradient)" stroke-dasharray="4 4" stroke-width="1.5"></path>
+<path d="M400,200 L650,100" fill="none" marker-end="url(#arrowhead-tertiary)" stroke="url(#lineGradient)" stroke-dasharray="4 4" stroke-width="1.5"></path>
+<path d="M400,200 L400,340" fill="none" marker-end="url(#arrowhead-primary)" stroke="url(#lineGradient)" stroke-dasharray="4 4" stroke-width="1.5"></path>
+</svg>
+<!-- Nodes -->
+<!-- Root Node (Highlighted) -->
+<div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 group/node">
+<div class="relative">
+<div class="absolute -inset-4 bg-primary/20 rounded-full blur-xl animate-pulse"></div>
+<div class="w-20 h-20 rounded-full bg-primary-container p-1 ring-4 ring-primary relative z-10 transition-transform duration-300 group-hover/node:scale-110 cursor-pointer">
+<div class="w-full h-full rounded-full border-2 border-white/20 overflow-hidden bg-surface-container-highest">
+<img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDB19FxqAVyObLmMIuBMCrnZBacCR6XF-S8j8Feao0OnNO7URTaye1BVWR_3IZ93SBJI4-VkrzDS8OlxYW9Q113AFBo4ThCIRXepcviu9Yp54dAPwcB81Crnid0lDMrFngmhf942nK63Mfyd2zSNmIu3TJJLNLsbVX35Ccdm03K6NsnKVr2yFKWEBet86tXlfRMWOh7xiVOsb59X5rngsotf2RS-txh6YectfM_BigY7UNHbsLUhg_oPLfjVNpVoUb_derYBzBH4g"/>
+</div>
+<div class="absolute -top-6 left-1/2 -translate-x-1/2 bg-primary text-on-primary text-[8px] font-label font-bold px-2 py-0.5 rounded uppercase whitespace-nowrap">Root Node</div>
+</div>
+</div>
+</div>
+<!-- Selected User Node (Highlighted) -->
+<div class="absolute right-[15%] top-[25%] translate-x-1/2 -translate-y-1/2 text-center group/node">
+<div class="relative">
+<div class="absolute -inset-3 bg-tertiary/20 rounded-full blur-lg opacity-0 group-hover/node:opacity-100 transition-opacity"></div>
+<div class="w-14 h-14 rounded-full bg-tertiary-container ring-4 ring-tertiary overflow-hidden mb-2 mx-auto relative z-10 transition-transform duration-300 group-hover/node:scale-110 cursor-pointer shadow-[0_0_20px_rgba(183,27,207,0.3)]">
+<img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCjEYJ-lT_OArshLJdQwC_7TGqi-VlOgTB5Cc3bvncmBH0PswqFkepjcnz8iklOVye0-ptgzBMi03xHDUZwfdswTuNpTy_ZwMKQJ2CSJg1Ptigi0uDV8iN2pTx2ZmDSaU4JoYSQvB5zdv5pL4ILOo8hJytob0TJEfuCtbXtP77c56RCaKHU4IcVXDrb6s-htgsZWBGw73UW7Cfwwq3yyDahym6EJpWRdAmE1NfukcMNwQ9iHgQYzkGEqy6Eh4PWd3dGl1WEeMnXbA"/>
+</div>
+<div class="absolute -bottom-6 left-1/2 -translate-x-1/2 bg-tertiary text-white text-[8px] font-label font-bold px-2 py-0.5 rounded uppercase whitespace-nowrap shadow-lg">Selected User</div>
+</div>
+</div>
+<!-- Level 1 Node -->
+<div class="absolute left-[15%] top-[25%] -translate-x-1/2 -translate-y-1/2 text-center group/node">
+<div class="w-12 h-12 rounded-full bg-secondary-container ring-2 ring-secondary/40 overflow-hidden mb-2 mx-auto transition-transform duration-300 group-hover/node:scale-110 cursor-pointer">
+<img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCnQuIhSBTqNyW0QRL9YPpIk1OKl4jgoNmdk9KG1c5PURfQ_kClmzFAdSaKW8NyJAidEAaJdHj79zpQW2-yutHQVBDylo_5JJE2YqVjWhg3W5Ay6R_2yHalbYuFZsbSuFekEP-38dcdHdb6_JiHbppi6nKevXKOjNaH_fut5zHY4dTpKofI_E_QFP4L9LDcRoyu3eo1-_bIwxpsqmT9Qa0jKpt07e5l6M6ga2TEFqxH6rfk8ZOmfx22Jj_18vMi5gLCv678paIUtA"/>
+</div>
+<span class="text-[9px] font-label text-secondary uppercase tracking-tight">Active Node</span>
+</div>
+<!-- Idle Node -->
+<div class="absolute left-1/2 bottom-[15%] -translate-x-1/2 text-center group/node">
+<div class="w-12 h-12 rounded-full bg-surface-variant ring-2 ring-outline-variant/30 overflow-hidden mb-2 mx-auto grayscale hover:grayscale-0 transition-all duration-300 group-hover/node:scale-110 cursor-pointer">
+<img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB0lqWw0iE3Tw4DgljdlPYsmIxzwaKqKDajYWnd6Ophc_j9EOmidx7Hou_7SQN5TpiRMLb1avVUKSAIKic5_vqg16b77kXb11CFYnrDBAOHC8F6BJf72RWU7taQ7XX-w-3WpAZCTWKizRc7ol_XrFI58TJDeylp1UFQfJXZ05y0bZ3mWUzjbnWz5waXxFcND7jUgjNddwFQ1Q_QlGSQbkAuGAXKCtfvGkHZjP6vHOE8MO6qGwnrOnIX0l68WnjYeV2NN6ZNvBAadQ"/>
+</div>
+<span class="text-[9px] font-label text-on-surface-variant/60 uppercase tracking-tight">Idle</span>
+</div>
+</div>
+</div>
+</section>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+<!-- 3. Bottom Left Section (Fraud Monitoring Panel) -->
+<section class="glass-card rounded-xl p-8 flex flex-col h-[450px]">
+<div class="flex items-center justify-between mb-6">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-tertiary" data-icon="shield_with_heart">shield_with_heart</span>
+<h2 class="text-xl font-headline font-bold">Fraud Monitoring</h2>
+</div>
+<span class="px-3 py-1 rounded-full bg-tertiary-container/20 text-tertiary text-[10px] font-label uppercase tracking-widest">Real-time Stream</span>
+</div>
+<div class="flex-1 overflow-y-auto pr-2">
+<table class="w-full text-left border-separate border-spacing-y-3">
+<thead>
+<tr class="text-[10px] font-label text-on-surface-variant uppercase tracking-widest">
+<th class="pb-2 pl-4">User ID</th>
+<th class="pb-2">Violation Type</th>
+<th class="pb-2">Risk Level</th>
+<th class="pb-2 text-right pr-4">Timestamp</th>
+</tr>
+</thead>
+<tbody class="text-sm font-body">
+<!-- Row 1: Cycle Fraud -->
+<tr class="bg-surface-container-low/50 hover:bg-surface-container-high transition-all duration-200 group/row cursor-help">
+<td class="py-4 pl-4 rounded-l-lg font-label text-xs">#PX-8821</td>
+<td>
+<div class="flex flex-col gap-1">
+<span class="inline-flex items-center gap-1.5 px-2 py-1 rounded text-[10px] font-bold uppercase bg-error/10 text-error border border-error/20 w-fit">
+<span class="material-symbols-outlined text-[14px] fill-1" data-icon="cycle">cycle</span>
+                                            Cycle Blocked
+                                        </span>
+<span class="text-[8px] text-on-surface-variant/60 font-label hidden group-hover/row:block animate-in fade-in slide-in-from-left-1">Circular referral path detected</span>
+</div>
+</td>
+<td>
+<div class="w-24 h-1.5 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-error w-[92%]"></div>
+</div>
+</td>
+<td class="py-4 text-right pr-4 rounded-r-lg text-on-surface-variant text-xs">14:22:05</td>
+</tr>
+<!-- Row 2: Velocity -->
+<tr class="bg-surface-container-low/50 hover:bg-surface-container-high transition-all duration-200 group/row cursor-help">
+<td class="py-4 pl-4 rounded-l-lg font-label text-xs">#PX-9014</td>
+<td>
+<div class="flex flex-col gap-1">
+<span class="inline-flex items-center gap-1.5 px-2 py-1 rounded text-[10px] font-bold uppercase bg-orange-500/10 text-orange-400 border border-orange-500/20 w-fit">
+<span class="material-symbols-outlined text-[14px]" data-icon="speed">speed</span>
+                                            Velocity Alert
+                                        </span>
+<span class="text-[8px] text-on-surface-variant/60 font-label hidden group-hover/row:block animate-in fade-in">Abnormal burst of signups in &lt;1m</span>
+</div>
+</td>
+<td>
+<div class="w-24 h-1.5 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-orange-400 w-[65%]"></div>
+</div>
+</td>
+<td class="py-4 text-right pr-4 rounded-r-lg text-on-surface-variant text-xs">14:18:12</td>
+</tr>
+<!-- Row 3: Self Refer -->
+<tr class="bg-surface-container-low/50 hover:bg-surface-container-high transition-all duration-200 group/row cursor-help">
+<td class="py-4 pl-4 rounded-l-lg font-label text-xs">#PX-7622</td>
+<td>
+<div class="flex flex-col gap-1">
+<span class="inline-flex items-center gap-1.5 px-2 py-1 rounded text-[10px] font-bold uppercase bg-yellow-500/10 text-yellow-400 border border-yellow-500/20 w-fit">
+<span class="material-symbols-outlined text-[14px]" data-icon="person_pin">person_pin</span>
+                                            Self Referral
+                                        </span>
+<span class="text-[8px] text-on-surface-variant/60 font-label hidden group-hover/row:block animate-in fade-in">Shared device/IP fingerprint detected</span>
+</div>
+</td>
+<td>
+<div class="w-24 h-1.5 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-yellow-400 w-[48%]"></div>
+</div>
+</td>
+<td class="py-4 text-right pr-4 rounded-r-lg text-on-surface-variant text-xs">13:55:40</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- 4. Bottom Right Section (Activity Feed) -->
+<section class="glass-card rounded-xl p-8 flex flex-col h-[450px]">
+<div class="flex items-center justify-between mb-6">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="bolt">bolt</span>
+<h2 class="text-xl font-headline font-bold">Live Activity Feed</h2>
+</div>
+<button class="text-[10px] font-label uppercase text-on-surface-variant hover:text-primary transition-colors">Clear Feed</button>
+</div>
+<div class="flex-1 overflow-y-auto pr-2 space-y-6">
+<!-- Activity Item 1: Referral Success -->
+<div class="flex gap-4 relative group">
+<div class="absolute left-4 top-10 bottom-0 w-px bg-outline-variant/10 group-last:hidden"></div>
+<div class="flex-shrink-0 w-8 h-8 rounded-full bg-secondary/10 text-secondary flex items-center justify-center z-10 border border-secondary/20 shadow-[0_0_10px_rgba(208,188,255,0.2)]">
+<span class="material-symbols-outlined text-sm" data-icon="person_add">person_add</span>
+</div>
+<div class="flex-1 pb-2">
+<div class="flex justify-between items-start mb-1">
+<div class="flex items-center gap-2">
+<h4 class="text-sm font-semibold">Referral Success</h4>
+<span class="text-[8px] font-bold px-1.5 py-0.5 rounded bg-secondary/10 text-secondary uppercase border border-secondary/20">Verified</span>
+</div>
+<span class="text-[10px] font-label text-on-surface-variant">2m ago</span>
+</div>
+<p class="text-xs text-on-surface-variant leading-relaxed">
+<span class="text-on-surface font-medium">Rahul Verma</span> successfully invited <span class="text-on-surface font-medium">Sara Khan</span>.
+                            </p>
+</div>
+</div>
+<!-- Activity Item 2: Cycle Blocked -->
+<div class="flex gap-4 relative group">
+<div class="absolute left-4 top-10 bottom-0 w-px bg-outline-variant/10 group-last:hidden"></div>
+<div class="flex-shrink-0 w-8 h-8 rounded-full bg-error/10 text-error flex items-center justify-center z-10 border border-error/20 shadow-[0_0_10px_rgba(255,180,171,0.2)]">
+<span class="material-symbols-outlined text-sm" data-icon="block">block</span>
+</div>
+<div class="flex-1 pb-2">
+<div class="flex justify-between items-start mb-1">
+<div class="flex items-center gap-2">
+<h4 class="text-sm font-semibold">Cycle Blocked</h4>
+<span class="text-[8px] font-bold px-1.5 py-0.5 rounded bg-error/10 text-error uppercase border border-error/20">Prevented</span>
+</div>
+<span class="text-[10px] font-label text-on-surface-variant">12m ago</span>
+</div>
+<p class="text-xs text-on-surface-variant leading-relaxed">
+                                System automatically blocked IP <span class="text-on-surface font-medium">192.168.1.1</span> due to detection of circular incentive loops.
+                            </p>
+</div>
+</div>
+<!-- Activity Item 3: Reward Distributed -->
+<div class="flex gap-4 relative group">
+<div class="absolute left-4 top-10 bottom-0 w-px bg-outline-variant/10 group-last:hidden"></div>
+<div class="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center z-10 border border-primary/20 shadow-[0_0_10px_rgba(46,91,255,0.2)]">
+<span class="material-symbols-outlined text-sm" data-icon="redeem">redeem</span>
+</div>
+<div class="flex-1 pb-2">
+<div class="flex justify-between items-start mb-1">
+<div class="flex items-center gap-2">
+<h4 class="text-sm font-semibold">Reward Distributed</h4>
+<span class="text-[8px] font-bold px-1.5 py-0.5 rounded bg-primary/10 text-primary uppercase border border-primary/20">Paid</span>
+</div>
+<span class="text-[10px] font-label text-on-surface-variant">45m ago</span>
+</div>
+<p class="text-xs text-on-surface-variant leading-relaxed">
+                                Reward pool payout of <span class="text-on-surface font-medium">₹2,500</span> released to user <span class="text-on-surface font-medium">Vikram Singh</span>.
+                            </p>
+</div>
+</div>
+</div>
+</section>
+</div>
+</div>
+</main>
+</body></html>

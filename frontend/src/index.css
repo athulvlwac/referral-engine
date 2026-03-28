@@ -1,0 +1,157 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: #111317;
+  --color-surface: #111317;
+  --color-surface-dim: #111317;
+  --color-surface-container: #1e2024;
+  --color-surface-container-low: #1a1c20;
+  --color-surface-container-high: #282a2e;
+  --color-surface-container-highest: #333539;
+  --color-surface-container-lowest: #0c0e12;
+  --color-surface-variant: #333539;
+  --color-surface-bright: #37393e;
+  --color-on-surface: #e2e2e8;
+  --color-on-surface-variant: #c4c5d9;
+  --color-on-background: #e2e2e8;
+  --color-primary: #b8c3ff;
+  --color-primary-container: #2e5bff;
+  --color-on-primary: #002388;
+  --color-on-primary-container: #efefff;
+  --color-primary-fixed: #dde1ff;
+  --color-primary-fixed-dim: #b8c3ff;
+  --color-on-primary-fixed: #001356;
+  --color-on-primary-fixed-variant: #0035be;
+  --color-secondary: #d0bcff;
+  --color-secondary-container: #571bc1;
+  --color-secondary-fixed: #e9ddff;
+  --color-secondary-fixed-dim: #d0bcff;
+  --color-on-secondary: #3c0091;
+  --color-on-secondary-container: #c4abff;
+  --color-on-secondary-fixed: #23005c;
+  --color-on-secondary-fixed-variant: #5516be;
+  --color-tertiary: #fbabff;
+  --color-tertiary-container: #b71bcf;
+  --color-tertiary-fixed: #ffd6fd;
+  --color-tertiary-fixed-dim: #fbabff;
+  --color-on-tertiary: #580065;
+  --color-on-tertiary-container: #ffebfb;
+  --color-on-tertiary-fixed: #36003e;
+  --color-on-tertiary-fixed-variant: #7c008e;
+  --color-error: #ffb4ab;
+  --color-error-container: #93000a;
+  --color-on-error: #690005;
+  --color-on-error-container: #ffdad6;
+  --color-outline: #8e90a2;
+  --color-outline-variant: #434656;
+  --color-inverse-surface: #e2e2e8;
+  --color-inverse-primary: #124af0;
+  --color-inverse-on-surface: #2f3035;
+  --color-surface-tint: #b8c3ff;
+
+  /* Border radius matching reference design */
+  --radius: 1rem;
+  --radius-lg: 2rem;
+  --radius-xl: 3rem;
+
+  /* Font families */
+  --font-headline: 'Manrope', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-label: 'Space Grotesk', system-ui, sans-serif;
+}
+
+/* Tailwind v4 preflight handles resets automatically.
+   Do NOT use unlayered * resets as they override Tailwind utility layers. */
+
+body {
+  background-color: #111317;
+  color: #e2e2e8;
+  font-family: 'Inter', system-ui, sans-serif;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.font-headline {
+  font-family: 'Manrope', system-ui, sans-serif;
+}
+
+.font-label {
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+}
+
+.font-body {
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+.font-inter {
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+.font-manrope {
+  font-family: 'Manrope', system-ui, sans-serif;
+}
+
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  vertical-align: middle;
+  font-size: 24px;
+  line-height: 1;
+  display: inline-block;
+}
+
+/* Glass card effect matching design */
+.glass-card {
+  background: rgba(30, 32, 36, 0.8);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(226, 226, 232, 0.05);
+}
+
+.glow-primary:hover {
+  box-shadow: 0 0 30px rgba(46, 91, 255, 0.15);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #282a2e;
+  border-radius: 10px;
+}
+
+/* Pulse animation */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.2); }
+}
+.animate-pulse-dot {
+  animation: pulse-dot 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Fade in */
+.fade-in {
+  animation: fadeIn 0.4s ease-out;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Select dropdown */
+select option {
+  background-color: #1e2024;
+  color: #e2e2e8;
+}
+
+/* Selection styling */
+::selection {
+  background: rgba(184, 195, 255, 0.3);
+}
