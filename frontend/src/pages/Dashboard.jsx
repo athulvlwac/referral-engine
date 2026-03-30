@@ -77,6 +77,7 @@ function IntelligenceNetwork({ users, referrals, onSimulate, isSimulating, onExp
   
   const [networkNodes, setNetworkNodes] = useState([]);
   const [networkLinks, setNetworkLinks] = useState([]);
+  const [networkClusters, setNetworkClusters] = useState([]);
 
   // Compute absolute roots and tree structures for "Tree View"
   const referredUserIds = new Set(referrals.map(r => r.child_id));
@@ -119,13 +120,74 @@ function IntelligenceNetwork({ users, referrals, onSimulate, isSimulating, onExp
       const child = nodes.find(n => n.id === r.child_id);
       return parent && child ? { 
         id: `link-${i}`, 
+        parentId: parent.id, 
+        childId: child.id,
         x1: parent.x, y1: parent.y, x2: child.x, y2: child.y,
         isGolden: (parent.id === users[0]?.id) 
       } : null;
     }).filter(Boolean);
 
+    // Compute active clusters
+    const adj = {};
+    nodes.forEach(n => adj[n.id] = []);
+    links.forEach(l => {
+      adj[l.parentId]?.push(l.childId);
+      adj[l.childId]?.push(l.parentId);
+    });
+
+    const visited = new Set();
+    const clustersData = [];
+
+    nodes.forEach(n => {
+      if (!visited.has(n.id)) {
+        const clusterNodes = [];
+        const queue = [n.id];
+        visited.add(n.id);
+
+        while (queue.length > 0) {
+          const currId = queue.shift();
+          const currNode = nodes.find(node => node.id === currId);
+          if (currNode) clusterNodes.push(currNode);
+
+          (adj[currId] || []).forEach(neighborId => {
+            if (!visited.has(neighborId)) {
+              visited.add(neighborId);
+              queue.push(neighborId);
+            }
+          });
+        }
+
+        if (clusterNodes.length > 1) {
+          clustersData.push(clusterNodes);
+        }
+      }
+    });
+
+    const visualClusters = clustersData.map(cluster => {
+      const xs = cluster.map(n => n.x);
+      const ys = cluster.map(n => n.y);
+      const minX = Math.min(...xs);
+      const maxX = Math.max(...xs);
+      const minY = Math.min(...ys);
+      const maxY = Math.max(...ys);
+      
+      const cx = (minX + maxX) / 2;
+      const cy = (minY + maxY) / 2;
+      
+      // Calculate dynamic pad depending on spread, min width/height of 30%
+      const padding = 20; 
+      const width = Math.max(30, (maxX - minX) + padding); 
+      const height = Math.max(30, (maxY - minY) + padding);
+      
+      return { cx, cy, width, height, nodeCount: cluster.length };
+    });
+
+    // Sort to give the biggest clusters priority
+    visualClusters.sort((a, b) => b.nodeCount - a.nodeCount);
+
     setNetworkNodes(nodes);
     setNetworkLinks(links);
+    setNetworkClusters(visualClusters);
   }, [users, referrals]);
 
   return (
@@ -184,12 +246,33 @@ function IntelligenceNetwork({ users, referrals, onSimulate, isSimulating, onExp
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] h-[90%] rounded-[200px] border border-outline-variant/5"></div>
 
             {/* Clusters Glow */}
-            {showClusters && (
-              <>
-                <div className="absolute left-[30%] top-[35%] w-[45%] h-[50%] bg-primary/10 rounded-[120px] border border-primary/20 pointer-events-none blur-md animate-pulse z-0" style={{ animationDuration: '4s' }}></div>
-                <div className="absolute right-[15%] top-[15%] w-[30%] h-[40%] bg-tertiary/10 rounded-[80px] border border-tertiary/20 pointer-events-none blur-md animate-pulse z-0" style={{ animationDuration: '3s', animationDelay: '1s' }}></div>
-              </>
-            )}
+            {showClusters && networkClusters.map((cluster, idx) => {
+              const colors = [
+                'bg-primary/10 border-primary/20',
+                'bg-tertiary/10 border-tertiary/20',
+                'bg-secondary/10 border-secondary/20',
+                'bg-error/10 border-error/20'
+              ];
+              const bgClass = colors[idx % colors.length];
+              const isEven = idx % 2 === 0;
+              const duration = isEven ? '4s' : '3s';
+              const delay = isEven ? '0s' : '1s';
+              
+              return (
+                <div 
+                  key={idx}
+                  className={`absolute ${bgClass} rounded-[120px] border pointer-events-none blur-md animate-pulse z-0 transition-all duration-1000`}
+                  style={{ 
+                    left: `${cluster.cx - cluster.width/2}%`, 
+                    top: `${cluster.cy - cluster.height/2}%`, 
+                    width: `${cluster.width}%`, 
+                    height: `${cluster.height}%`,
+                    animationDuration: duration,
+                    animationDelay: delay
+                  }}
+                ></div>
+              );
+            })}
 
             <svg className="absolute inset-0 w-full h-full z-10" style={{ minHeight: '100%' }}>
               <defs>
