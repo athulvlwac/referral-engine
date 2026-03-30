@@ -683,7 +683,11 @@ async def simulate_generate(count: int = 100, admin_user: User = Depends(require
     new_users = []
     for _ in range(count):
         uid_str = str(uuid.uuid4())[:8]
-        user = User(name=f"SimUser {uid_str}", email=f"sim_{uid_str}@example.com")
+        user = User(
+            name=f"SimUser {uid_str}",
+            email=f"sim_{uid_str}@example.com",
+            password_hash=get_password_hash("simulated123"),
+        )
         db.add(user)
         new_users.append(user)
     

@@ -112,7 +112,7 @@ export default function UserDashboard() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="glass-card rounded-xl p-8 fade-in flex border border-primary/20">
-          <div className="flex-1">
+          <div className="flex-1 min-w-0">
             <div className="flex items-center gap-3 mb-4">
               <div className="p-2 rounded-lg bg-primary-container text-on-primary-container">
                 <Icon name="loyalty" size={20} />
@@ -123,7 +123,7 @@ export default function UserDashboard() {
               Share this unique link with friends. When they register using your code, you'll earn rewards added directly to your balance.
             </p>
             <div className="flex items-center gap-3">
-              <div className="flex-1 bg-background border border-outline-variant/30 rounded-lg px-4 py-3 font-mono text-sm text-on-surface truncate">
+              <div className="flex-1 min-w-0 bg-background border border-outline-variant/30 rounded-lg px-4 py-3 font-mono text-sm text-on-surface truncate">
                 {window.location.origin}/register?ref={profile?.user?.referral_code || profile?.referral_code}
               </div>
               <button 
